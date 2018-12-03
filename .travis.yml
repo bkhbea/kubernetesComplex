@@ -8,10 +8,10 @@ script:
   - docker run bkhbea/react-test npm test -- --coverage
 
 after_success:
-  - docker build bkhbea/multi-client ./client
-  - docker build bkhbea/multi-nginx ./nginx
-  - docker build bkhbea/multi-server ./server
-  - docker build bkhbea/multi-worker ./worker
+  - docker build -t bkhbea/multi-client ./client
+  - docker build -t bkhbea/multi-nginx ./nginx
+  - docker build -t bkhbea/multi-server ./server
+  - docker build -t bkhbea/multi-worker ./worker
 
 
  # login to docker CLI
