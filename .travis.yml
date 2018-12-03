@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t bkhbea/react-test -t ./client/Dockerfile.dev ./client
+
+script:
+  - docker run bkhbea/react-test npm test -- --coverage
+
+after_success:
+  - docker build bkhbea/multi-client ./client
+  - docker build bkhbea/multi-nginx ./nginx
+  - docker build bkhbea/multi-server ./server
+  - docker build bkhbea/multi-worker ./worker
+
+
+ # login to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+
+ # push those images and push them to docker hub
+  - docker push bkhbea/multi-client
+  - docker push bkhbea/multi-nginx
+  - docker push bkhbea/multi-server
+  - docker push bkhbea/multi-worker
