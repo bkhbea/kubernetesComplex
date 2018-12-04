@@ -23,3 +23,17 @@ after_success:
   - docker push bkhbea/multi-nginx
   - docker push bkhbea/multi-server
   - docker push bkhbea/multi-worker
+
+
+deploy:
+  provider: elasticbeanstalk
+  region: ca-central-1
+  app: MyMultiContainerApp
+  env: Mymulticontainerapp-env
+  bucket_name: elasticbeanstalk-ca-central-1-785213703975
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secrure:$AWS_SECRET_KEY
